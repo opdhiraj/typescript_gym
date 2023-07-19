@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import Benefits from "./scenes/benifits/Benefits";
+import Home from "./scenes/home/Home";
+import Navbar from "./scenes/navbar/Navbar";
+import { SelectedPage } from "./shared/types";
 
 function App() {
+  const [selectedPage, setSelectedPage] = useState<SelectedPage>(
+    SelectedPage.Home
+  );
+  const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setIsTopOfPage(true);
+        setSelectedPage(SelectedPage.Home);
+      }
+      if (window.scrollY !== 0) {
+        setIsTopOfPage(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    //when component is unmounting otherwise leads to memory leaks
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    // bg-dark-subtle
+    <div className="app bg-dark-subtle ">
+      <Navbar
+        isTopOfPage={isTopOfPage}
+        selectedPage={selectedPage}
+        setSelectedPage={setSelectedPage}
+      />
+      <Home setSelectedPage={setSelectedPage} />
+      <Benefits setSelectedPage={setSelectedPage} />
     </div>
   );
 }

@@ -1,0 +1,23 @@
+.flexBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  z-index: 30;
+  width: 100%;
+}
+.navbarInner {
+  margin: auto;
+  width: 83.333%;
+}
+.mobileMenu {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  height: 100%;
+  width: 300px;
+}
